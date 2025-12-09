@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teeswim-api
+  namespace: default
+  labels:
+    app: teeswim-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: teeswim-api
+  template:
+    metadata:
+      labels:
+        app: teeswim-api
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: teeswim-api
+          image: ghcr.io/akaich00/teeswim-api:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: PORT
+              value: "4000"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: REDIS_URL
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: JWT_SECRET
+            - name: FAL_AI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: FAL_AI_API_KEY
+            - name: SHOPIFY_ADMIN_API_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_ADMIN_API_ACCESS_TOKEN
+            - name: SHOPIFY_STOREFRONT_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_STOREFRONT_ACCESS_TOKEN
+            - name: SHOPIFY_STORE_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_STORE_DOMAIN
+            - name: GELATO_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: GELATO_API_KEY
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: CLOUDINARY_CLOUD_NAME
+            - name: CLOUDINARY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: CLOUDINARY_API_KEY
+            - name: CLOUDINARY_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: CLOUDINARY_API_SECRET
+            - name: DUB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: DUB_API_KEY
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: GOOGLE_API_KEY
+            - name: ALLOWED_ORIGINS
+              value: "http://100.97.89.1:30400,http://localhost:3001"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 5

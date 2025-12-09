@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teeswim-mockup
+  namespace: default
+  labels:
+    app: teeswim-mockup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teeswim-mockup
+  template:
+    metadata:
+      labels:
+        app: teeswim-mockup
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: teeswim-mockup
+          image: ghcr.io/akaich00/teeswim-mockup:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_HOST
+              value: "0.0.0.0"
+            - name: SERVER_PORT
+              value: "8080"
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: CLOUDINARY_CLOUD_NAME
+            - name: CLOUDINARY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: CLOUDINARY_API_KEY
+            - name: CLOUDINARY_API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: CLOUDINARY_API_SECRET
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
