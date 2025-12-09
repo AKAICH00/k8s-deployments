@@ -41,3 +41,6 @@ spec:
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: app-secrets
