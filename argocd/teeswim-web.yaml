@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: teeswim-web
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AKAICH00/k8s-deployments.git
+    targetRevision: main
+    path: apps/teeswim-web
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
