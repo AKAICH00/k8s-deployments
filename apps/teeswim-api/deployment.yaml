@@ -45,11 +45,11 @@ spec:
                 secretKeyRef:
                   name: teeswim-secrets
                   key: FAL_AI_API_KEY
-            - name: SHOPIFY_ADMIN_API_ACCESS_TOKEN
+            - name: SHOPIFY_ADMIN_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: teeswim-secrets
-                  key: SHOPIFY_ADMIN_API_ACCESS_TOKEN
+                  key: SHOPIFY_ADMIN_ACCESS_TOKEN
             - name: SHOPIFY_STOREFRONT_ACCESS_TOKEN
               valueFrom:
                 secretKeyRef:
