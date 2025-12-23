@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: teeswim-api
-          image: ghcr.io/akaich00/teeswim-api@sha256:9cb1dd40d31a1d63f897105fd80a69a6c6f3ca9dcdb02ed159901f7ff08e576a
+          image: ghcr.io/akaich00/teeswim-api:019a651
           ports:
             - containerPort: 4000
           env:
@@ -93,7 +93,7 @@ spec:
             - name: KIE_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: teeswim-secrets
+                  name: kie-secret
                   key: KIE_API_KEY
             - name: ALLOWED_ORIGINS
               value: "https://app.teeswim.com,https://teeswim.com,http://localhost:3001"
