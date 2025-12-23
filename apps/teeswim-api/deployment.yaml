@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: teeswim-api
-          image: ghcr.io/akaich00/teeswim-api:latest
+          image: ghcr.io/akaich00/teeswim-api@sha256:9cb1dd40d31a1d63f897105fd80a69a6c6f3ca9dcdb02ed159901f7ff08e576a
           ports:
             - containerPort: 4000
           env:
@@ -91,7 +91,7 @@ spec:
                   name: teeswim-secrets
                   key: GOOGLE_API_KEY
             - name: ALLOWED_ORIGINS
-              value: "http://100.97.89.1:30400,http://localhost:3001"
+              value: "https://app.teeswim.com,https://teeswim.com,http://localhost:3001"
           resources:
             requests:
               memory: "128Mi"
