@@ -11,7 +11,7 @@ spec:
     path: apps/teeswim-web
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: teeswim
   syncPolicy:
     automated:
       prune: true
