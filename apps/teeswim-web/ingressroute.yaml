@@ -1,0 +1,34 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: teeswim-web-https
+  namespace: teeswim
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`app.teeswim.com`) || Host(`www.teeswim.com`) || Host(`teeswim.com`)
+      services:
+        - name: teeswim-web
+          port: 3001
+  tls:
+    certResolver: letsencrypt
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: teeswim-web-http
+  namespace: teeswim
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`app.teeswim.com`) || Host(`www.teeswim.com`) || Host(`teeswim.com`)
+      middlewares:
+        - name: redirect-https
+          namespace: default
+      services:
+        - name: teeswim-web
+          port: 3001
