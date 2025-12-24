@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: teeswim-web
-          image: ghcr.io/akaich00/teeswim-web:448a3b5
+          image: ghcr.io/akaich00/teeswim-web:460b98d
           ports:
             - containerPort: 3001
           env:
@@ -28,7 +28,7 @@ spec:
             - name: NODE_ENV
               value: "production"
             - name: NEXT_PUBLIC_API_URL
-              value: "http://100.97.89.1:30401"
+              value: "https://api.teeswim.com/v1"
           resources:
             requests:
               memory: "128Mi"
