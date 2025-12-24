@@ -29,6 +29,20 @@ spec:
               value: "production"
             - name: NEXT_PUBLIC_API_URL
               value: "https://api.teeswim.com/v1"
+            # Shopify runtime env vars (used by API routes)
+            - name: SHOPIFY_STORE_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_STORE_DOMAIN
+            - name: SHOPIFY_STOREFRONT_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_STOREFRONT_ACCESS_TOKEN
+            # Mockup service internal URL
+            - name: RUST_MOCKUP_SERVICE_URL
+              value: "http://teeswim-mockup:8080"
           resources:
             requests:
               memory: "128Mi"
