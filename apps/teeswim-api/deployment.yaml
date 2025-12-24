@@ -120,7 +120,7 @@ spec:
             - name: RUST_MOCKUP_SERVICE_URL
               value: "http://teeswim-mockup:8080"
             - name: ALLOWED_ORIGINS
-              value: "https://app.teeswim.com,https://teeswim.com,http://localhost:3001"
+              value: "https://www.teeswim.com,https://teeswim.com,http://localhost:3001"
           resources:
             requests:
               memory: "128Mi"
