@@ -95,6 +95,30 @@ spec:
                 secretKeyRef:
                   name: kie-secret
                   key: KIE_API_KEY
+            - name: R2_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: R2_ACCOUNT_ID
+            - name: R2_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: R2_ACCESS_KEY_ID
+            - name: R2_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: R2_SECRET_ACCESS_KEY
+            - name: R2_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: R2_BUCKET_NAME
+            - name: R2_PUBLIC_URL
+              value: "https://assets.teeswim.com"
+            - name: RUST_MOCKUP_SERVICE_URL
+              value: "http://teeswim-mockup:8080"
             - name: ALLOWED_ORIGINS
               value: "https://app.teeswim.com,https://teeswim.com,http://localhost:3001"
           resources:
