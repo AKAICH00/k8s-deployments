@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: teeswim-web
-  namespace: default
+  namespace: teeswim
   labels:
     app: teeswim-web
 spec:
