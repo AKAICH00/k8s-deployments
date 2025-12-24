@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: teeswim-mockup
-  namespace: default
+  namespace: teeswim
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: teeswim-mockup
   ports:
     - port: 8080
       targetPort: 8080
-      nodePort: 30402
+      name: http
