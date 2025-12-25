@@ -119,6 +119,37 @@ spec:
               value: "https://assets.teeswim.com"
             - name: RUST_MOCKUP_SERVICE_URL
               value: "http://teeswim-mockup:8080"
+            # Shopify Customer Account API (Headless Auth)
+            - name: SHOPIFY_CUSTOMER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_CUSTOMER_CLIENT_ID
+            - name: SHOPIFY_CUSTOMER_AUTH_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_CUSTOMER_AUTH_URL
+            - name: SHOPIFY_CUSTOMER_TOKEN_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_CUSTOMER_TOKEN_URL
+            - name: SHOPIFY_CUSTOMER_LOGOUT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_CUSTOMER_LOGOUT_URL
+            - name: SHOPIFY_HEADLESS_STOREFRONT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_HEADLESS_STOREFRONT_TOKEN
+            - name: SHOPIFY_HEADLESS_PRIVATE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: SHOPIFY_HEADLESS_PRIVATE_TOKEN
             - name: ALLOWED_ORIGINS
               value: "https://www.teeswim.com,https://teeswim.com,https://app.teeswim.com,http://localhost:3001,http://localhost:8081"
           resources:
