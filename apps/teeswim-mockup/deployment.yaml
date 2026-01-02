@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: teeswim-mockup
-          image: ghcr.io/akaich00/teeswim-mockup:4101835
+          image: ghcr.io/akaich00/teeswim-mockup:b9ff2b4
           ports:
             - containerPort: 8080
           env:
