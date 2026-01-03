@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: teeswim-api
-          image: ghcr.io/akaich00/teeswim-api:20a4a46
+          image: ghcr.io/akaich00/teeswim-api:466d849
           ports:
             - containerPort: 4000
           env:
