@@ -2,10 +2,47 @@
 
 GitOps repository for Kubernetes deployments managed by ArgoCD.
 
+## Quick start (provision a Hetzner k3s cluster)
+
+```bash
+# 1. Set your Hetzner API token
+export HCLOUD_TOKEN="htz_..."
+
+# 2. (Optional but recommended) Set a Tailscale auth key
+export HETZNER_TS_AUTHKEY="tskey_..."
+
+# 3. Run the setup CLI (interactive or non-interactive)
+./setup apply              # interactive: prompts for all values
+
+# OR non-interactive (e.g., for LLM/CI automation)
+./setup apply --answers infra/setup/examples/answers-dev.yaml --auto-approve
+
+# 4. Fetch kubeconfig
+./setup kubeconfig <control_plane_ip_or_tailscale_ip>
+
+# 5. Verify and deploy apps via ArgoCD
+export KUBECONFIG=$PWD/kubeconfig
+kubectl get nodes
+kubectl apply -f argocd/hello-world-app.yaml
+```
+
+See [infra/setup/README.md](infra/setup/README.md) for full CLI docs, and [infra/hetzner/README.md](infra/hetzner/README.md) for Terraform module details.
+
 ## Structure
 
 ```
 k8s-deployments/
+├── infra/
+│   ├── setup/                  # Interactive CLI for provisioning
+│   │   ├── cli.py
+│   │   ├── requirements.txt
+│   │   └── examples/           # Example answers files (dev, prod, llm, quickstart)
+│   └── hetzner/                # Terraform module for k3s on Hetzner
+│       ├── main.tf
+│       ├── variables.tf
+│       ├── outputs.tf
+│       ├── versions.tf
+│       └── README.md
 ├── apps/                    # Application manifests
 │   └── hello-world/         # Hello World test app
 │       ├── deployment.yaml
@@ -13,6 +50,7 @@ k8s-deployments/
 │       └── kustomization.yaml
 ├── argocd/                  # ArgoCD Application definitions
 │   └── hello-world-app.yaml
+├── setup                    # Entry script for CLI (calls infra/setup/cli.py)
 └── README.md
 ```
 

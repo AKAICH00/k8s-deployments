@@ -1,1 +1,18 @@
 CLAUDE.md
+
+# Terraform
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/terraform.tfstate.d/
+**/crash.log
+**/crash.*.log
+
+# Local vars / secrets
+**/*.tfvars
+**/*.tfvars.json
+**/.env
+infra/setup/.venv/
+infra/setup/.venv/**
+**/kubeconfig
+**/kubeconfig.*

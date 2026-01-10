@@ -1,0 +1,18 @@
+# Quick-start: public SSH enabled for ease of access during onboarding
+# (lock it down to your IP before production!)
+
+cluster_name: k3s-quickstart
+location: fsn1
+control_plane_server_type: cx31
+agent_server_type: cx31
+agent_count: 2
+enable_public_ssh: true
+enable_public_k8s_api: false
+allowed_ssh_cidrs:
+  - 0.0.0.0/0
+allowed_k8s_api_cidrs: []
+tailscale_authkey: null
+tailscale_tags: []
+ssh_public_key_path: ~/.ssh/id_ed25519.pub
+database_choice: none
+starter_app: null

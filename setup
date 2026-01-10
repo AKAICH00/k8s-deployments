@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Quick entrypoint for setup CLI. Sets up venv and runs the CLI.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SETUP_DIR="$SCRIPT_DIR/infra/setup"
+VENV="$SETUP_DIR/.venv"
+
+# Create venv if missing
+if [ ! -d "$VENV" ]; then
+  echo "Setting up venv at $VENV..."
+  python3 -m venv "$VENV"
+  "$VENV/bin/pip" install -q -r "$SETUP_DIR/requirements.txt"
+fi
+
+# Run CLI
+exec "$VENV/bin/python" "$SETUP_DIR/cli.py" "$@"
