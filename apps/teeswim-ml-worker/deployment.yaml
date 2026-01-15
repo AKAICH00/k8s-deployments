@@ -64,13 +64,5 @@ spec:
               memory: "256Mi"
               cpu: "250m"
           # No ports - background worker
-          # Liveness probe using process check
-          livenessProbe:
-            exec:
-              command:
-                - /bin/sh
-                - -c
-                - "pgrep -x ml-worker"
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            failureThreshold: 3
+          # No liveness probe needed - worker runs continuously
+          # If it crashes, K8s will restart automatically
