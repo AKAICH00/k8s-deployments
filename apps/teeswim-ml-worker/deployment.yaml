@@ -19,7 +19,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: teeswim-ml-worker
-          image: ghcr.io/akaich00/teeswim-ml-worker:f602a68
+          image: ghcr.io/akaich00/teeswim-ml-worker:3f0bfa4
           env:
             - name: DATABASE_URL
               valueFrom:
