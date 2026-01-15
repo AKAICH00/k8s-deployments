@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teeswim-ml-worker
+  namespace: teeswim
+  labels:
+    app: teeswim-ml-worker
+spec:
+  replicas: 1  # Singleton worker - only one instance needed
+  selector:
+    matchLabels:
+      app: teeswim-ml-worker
+  template:
+    metadata:
+      labels:
+        app: teeswim-ml-worker
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: teeswim-ml-worker
+          image: ghcr.io/akaich00/teeswim-ml-worker:latest
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: DATABASE_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: REDIS_URL
+            - name: QDRANT_URL
+              value: "qdrant-service.db-qdrant"
+            - name: QDRANT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: QDRANT_API_KEY
+            # ML Worker Configuration
+            - name: EMBEDDING_POLL_INTERVAL
+              value: "5s"
+            - name: EMBEDDING_BATCH_SIZE
+              value: "10"
+            - name: USER_EMBEDDING_INTERVAL
+              value: "1h"
+            - name: COOCCURRENCE_INTERVAL
+              value: "24h"
+            # AI Provider for embedding generation
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: teeswim-secrets
+                  key: GOOGLE_API_KEY
+            # ML Service URL for embedding generation
+            - name: ML_SERVICE_URL
+              value: "http://ml-service:8000"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          # No ports - background worker
+          # Liveness probe using process check
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "pgrep -x ml-worker"
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            failureThreshold: 3
