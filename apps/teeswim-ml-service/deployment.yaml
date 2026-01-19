@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ml-service
-          image: ghcr.io/akaich00/teeswim-ml-service:2af64f5
+          image: ghcr.io/akaich00/teeswim-ml-service:1d07a7a
           ports:
             - containerPort: 8000
           env:
