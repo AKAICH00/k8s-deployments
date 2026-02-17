@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: ghcr.io/akaich00/teeswim-api:9e2f9fc
+          image: ghcr.io/akaich00/teeswim-api:5174e93
           ports:
             - containerPort: 4000
           envFrom:
