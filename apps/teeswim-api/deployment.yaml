@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: teeswim-api
-  namespace: default
+  namespace: teeswim
   labels:
     app: teeswim-api
 spec:
@@ -51,7 +51,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: teeswim-api
-  namespace: default
+  namespace: teeswim
 spec:
   selector:
     app: teeswim-api
