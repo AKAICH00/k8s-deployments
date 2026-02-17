@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teeswim-api
+  namespace: teeswim
+  labels:
+    app: teeswim-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teeswim-api
+  template:
+    metadata:
+      labels:
+        app: teeswim-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/akaich00/teeswim-api:9e2f9fc
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - secretRef:
+                name: teeswim-secrets
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+      imagePullSecrets:
+        - name: ghcr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: teeswim-api
+  namespace: teeswim
+spec:
+  selector:
+    app: teeswim-api
+  ports:
+    - port: 4000
+      targetPort: 4000
+      nodePort: 30401
+  type: NodePort
